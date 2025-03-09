@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 backend:
   name: git-gateway
   branch: main
@@ -29,7 +28,6 @@ collections:
     sortable_fields:
       - "pubDate"
       - "updatedDate"
-=======
 # local_backend: true
 
 # Backend configuration, used for handling the content's Git management
@@ -105,4 +103,4 @@ settings:
   footer_text: "© 2025 Waltahh, All rights reserved."  # Footer text
 
 
->>>>>>> 387aa09 (change)
+ 
