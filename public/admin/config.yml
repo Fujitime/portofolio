@@ -1,9 +1,8 @@
 backend:
-  name: git-gateway  # Using Git Gateway for authentication and handling of content
-  branch: main  # Default Git branch
+  name: git-gateway
+  branch: main
   auth_scope: repo
 
-local_backend: true
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
