@@ -46,4 +46,5 @@ export default defineConfig({
       rehypeMath,
     ],
   },
+  output: "static",  // Make sure you want to output static files
 });
