@@ -1,49 +1,61 @@
 ---
+import { t, type Lang } from "../lang/translate";
 
+const currentLang = Astro.cookies.get("lang")?.value as Lang || "jp";
+
+console.log("Current Lang (Cookie.astro):", currentLang);
+console.log("Cookie Lang (Cookie.astro):", Astro.cookies.get("lang")?.value);
 ---
 
 <template id="cookie-template">
-	<div
-		class="fixed opacity-0 translate-x-10% bottom-0 right-0 m-4 bg-l-base text-l-on-base rounded-lg shadow-xl dark:(bg-d-base text-d-on-base border-1 border-white border-opacity-10) flex flex-row items-center gap-4 p-4 z-9999 transition-all duration-500 ease-in-out"
-		id="cookie-dialog">
-		<div class="i-myna-cookie w10 h10"></div>
-		<div class="max-w-xs text-xs flex flex-col items-end">
-			<p>Not a bakery, but here's a 'cookie' for you! 🍪 Just so you know, this site uses cookies. Enjoy!</p>
-			<button class="px-2 py1 bg-gray bg-opacity-25 backdrop-blur-lg rounded-md w-fit mt-2">Okay 🍪 </button>
-		</div>
-	</div>
+  <div
+    class="fixed opacity-0 translate-x-10% bottom-0 right-0 m-4 bg-l-base text-l-on-base rounded-lg shadow-xl dark:(bg-d-base text-d-on-base border-1 border-white border-opacity-10) flex flex-row items-center gap-4 p-4 z-9999 transition-all duration-500 ease-in-out"
+    id="cookie-dialog">
+    <div class="i-myna-cookie w10 h10"></div>
+    <div class="max-w-xs text-xs flex flex-col items-end">
+      <p>{t(currentLang, "cookieMessage")}</p>
+      <button class="px-2 py1 bg-gray bg-opacity-25 backdrop-blur-lg rounded-md w-fit mt-2">
+        {t(currentLang, "cookieButton")}
+      </button>
+    </div>
+  </div>
 </template>
+
 <script>
-	document.addEventListener("DOMContentLoaded", () => {
-		const isAcceptCookie = localStorage.getItem("acceptCookie") === "true";
-		if (!isAcceptCookie) {
-			let template = document.getElementById("cookie-template") as HTMLTemplateElement;
-			if (template) {
-				let clone = document.importNode(template.content, true);
-				document.body.appendChild(clone);
+ document.addEventListener("DOMContentLoaded", () => {
+  const isAcceptCookie = localStorage.getItem("acceptCookie") === "true";
+  if (!isAcceptCookie) {
+    // Gunakan type assertion ke HTMLTemplateElement
+    const template = document.getElementById("cookie-template") as HTMLTemplateElement | null;
+    
+    if (template) {
+      // Clone konten template
+      const clone = document.importNode(template.content, true);
+      document.body.appendChild(clone);
 
-				const cookieDialog = document.getElementById("cookie-dialog");
-				const acceptCookie = cookieDialog?.querySelector("button");
+      const cookieDialog = document.getElementById("cookie-dialog");
+      const acceptCookie = cookieDialog?.querySelector("button");
 
-				setTimeout(() => {
-					cookieDialog?.classList.add("slide-x");
+      setTimeout(() => {
+        cookieDialog?.classList.add("slide-x");
 
-					acceptCookie?.addEventListener("click", () => {
-						console.log("clicker");
-						cookieDialog?.classList.remove("slide-x");
-						setTimeout(() => {
-							cookieDialog?.remove();
-							localStorage.setItem("acceptCookie", "true");
-						}, 510);
-					});
-				}, 2000);
-			}
-		}
-	});
+        acceptCookie?.addEventListener("click", () => {
+          console.log("clicker");
+          cookieDialog?.classList.remove("slide-x");
+          setTimeout(() => {
+            cookieDialog?.remove();
+            localStorage.setItem("acceptCookie", "true");
+          }, 510);
+        });
+      }, 2000);
+    }
+  }
+});
 </script>
+
 <style>
-	.slide-x {
-		transform: translateX(0);
-		opacity: 1;
-	}
+  .slide-x {
+    transform: translateX(0);
+    opacity: 1;
+  }
 </style>

@@ -12,13 +12,24 @@
     <h1>Decap CMS Admin Panel</h1>
 
     <script>
-      // Inisialisasi Netlify Identity
+      // Pastikan Netlify Identity tersedia di window
       if (window.netlifyIdentity) {
+        // Ketika Netlify Identity diinisialisasi
+        window.netlifyIdentity.on("init", (user) => {
+          if (user) {
+            // Jika sudah login, arahkan ke halaman admin
+            document.location.href = "/admin/";
+          } else {
+            // Jika belum login, tunggu login dan baru arahkan
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+
+        // Inisialisasi Netlify Identity
         window.netlifyIdentity.init();
       }
-      
-      // Inisialisasi Decap CMS
-      CMS.init();
     </script>
   </body>
 </html>

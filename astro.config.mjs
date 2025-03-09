@@ -49,6 +49,6 @@ export default defineConfig({
     }),
     UnoCss({ injectReset: true }),
   ],
-  output: "static",
+  output: "server",
   // adapter: vercel()
 });

@@ -1,62 +1,77 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import CookieBanner from "../components/Cookie.astro";
+import { t, type Lang } from "../lang/translate";
+
+// Ambil parameter `lang` dari URL
+let currentLang: Lang = "jp"; // Nilai default
+
+if (Astro.url.searchParams.has("lang")) {
+  const newLang = Astro.url.searchParams.get("lang") as Lang;
+  
+  // Atur cookie `lang` dengan nilai baru
+  Astro.cookies.set("lang", newLang, {
+    path: "/",
+    maxAge: 60 * 60 * 24 * 365, // 1 tahun
+  });
+
+  // Redirect ke halaman yang sama tanpa parameter `lang`
+  return Astro.redirect(Astro.url.pathname);
+}
+
+// Jika tidak ada parameter `lang`, ambil nilai dari cookie
+currentLang = Astro.cookies.get("lang")?.value as Lang || "jp";
+
+console.log("Current Lang (index.astro):", currentLang);
+console.log("Cookie Lang (index.astro):", Astro.cookies.get("lang")?.value);
 
 const socialMedia = [
-	{
-		link: "https://github.com/fujitime",
-		icon: "i-myna-brand-github",
-		name: "Github",
-	},
-	{
-		link: "https://www.facebook.com/kang.komen.798",
-		icon: "i-myna-brand-facebook",
-		name: "Facebook",
-	},
+  {
+    link: "https://github.com/fujitime",
+    icon: "i-myna-brand-github",
+    name: t(currentLang, "socialMedia.github"),
+  },
+  {
+    link: "https://www.facebook.com/kang.komen.798",
+    icon: "i-myna-brand-facebook",
+    name: t(currentLang, "socialMedia.facebook"),
+  },
 ];
 ---
 
 <Layout
-	title="俺"
-	description="Halo! Saya Fuji Halim Rabbani, seorang penjelajah internet yang menghabiskan banyak waktu di depan layar. Saya menikmati belajar bahasa dengan Anki dan Duolingo, membaca manga, menonton anime, serta sesekali menulis dan berolahraga.">
-	<div class="flex items-center justify-center min-h-70vh p-12">
-		<div class="w-full grid gap-3 max-w-xl slide-enter-content">
-			<h1 class="dark:text-#e5e7eb text-4xl font-bold item">
-				Fuji <span class="text-sm font-normal opacity-75 ml-1">or <span class="bold underline">Waltahh</span></span>
-			</h1>
-			<div>
-				<p>Hi, I am Fuji Halim Rabani</p>
-				<p>A "Penjelajah Internet" who spends a lot of time in front of a screen.</p>
-			</div>
-			<p>
-				My daily activities playing <strong>Anki</strong> and <strong>Duolingo</strong>. Sounds productive? Maybe.
-			</p>
-			<p>
-				In between my not-so-busy schedule, I enjoy reading <strong>manga</strong>, watching <strong>anime</strong>,
-				and <strong>scrolling through Facebook</strong>—a very human thing to do nowadays.
-			</p>
-			<p>
-				Oh, and sometimes I also enjoy <strong>writing</strong> and <strong>exercising</strong>.
-				Writing helps me capture the random thoughts running around in my head, while exercising... well,
-				at least I try. And that's what matters, right?
-			</p>
-			<div class="w-20 h-1px bg-gray opacity-50 mx-auto mt-2"></div>
-			<div class="text-sm">
-				<p>Find me on</p>
-				<div class="flex items-start justify-start gap-4 mt-2">
-					{
-						socialMedia.map((url) => (
-							<a
-								href={url.link}
-								class="btn-normal flex items-center justify-center gap-2 transition-all duration-300 ease-in-out hover:(opacity-100 bg-#8882) opacity-90"
-								target="_blank"
-								rel="external nofollow noopener noreferrer">
-								<span class:list={[url.icon, "inline-block", "w-4", "h-4"]} />
-								{url.name}
-							</a>
-						))
-					}
-				</div>
-			</div>
-		</div>
-	</div>
+  title={t(currentLang, "title")}
+  description={t(currentLang, "description")}
+>
+  <div class="flex items-center justify-center min-h-70vh p-12">
+    <div class="w-full grid gap-3 max-w-xl slide-enter-content">
+      <h1 class="dark:text-#e5e7eb text-4xl font-bold item">
+        Fuji <span class="text-sm font-normal opacity-75 ml-1">or <span class="bold underline">Waltahh</span></span>
+      </h1>
+      <div>
+        <p>{t(currentLang, "description")}</p>
+      </div>
+      <div class="w-20 h-1px bg-gray opacity-50 mx-auto mt-2"></div>
+      <div class="text-sm">
+        <p>Find me on</p>
+        <div class="flex items-start justify-start gap-4 mt-2">
+          {
+            socialMedia.map((url) => (
+              <a
+                href={url.link}
+                class="btn-normal flex items-center justify-center gap-2 transition-all duration-300 ease-in-out hover:(opacity-100 bg-#8882) opacity-90"
+                target="_blank"
+                rel="external nofollow noopener noreferrer"
+              >
+                <span class:list={[url.icon, "inline-block", "w-4", "h-4"]} />
+                {url.name}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <CookieBanner />
 </Layout>

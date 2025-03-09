@@ -25,13 +25,7 @@ for (const post of posts) {
 	<div class="grid gap-6 mt-32 max-w-3xl mx-auto px-12 mb-20 slide-enter-content">
 		<h1>
 			<span class="text-3xl lg:text-4xl font-bold font-lexend">Blog</span>
-			<span class="font-light text-sm">A collection of my thoughts</span>
 		</h1>
-		<p>
-			Here you can find a collection of my thoughts on various topics. I try to write about things that I find interesting, and that I think
-			others might find interesting as well. I hope you enjoy reading them!
-		</p>
-		<button id="englishOnly" class="w-fit -mt-4 flex items-center gap-2"><span class="i-myna-square"></span><span class="i-myna-check-square hidden"></span> Show English Only</button>
 		{
 			Object.entries(postsByYear)
 				.sort(([a], [b]) => parseInt(b) - parseInt(a))
@@ -77,21 +71,3 @@ for (const post of posts) {
 	</div>
 </DefautLayout>
 
-<script>
-	const showEnglishOnlyButton = document.getElementById("englishOnly") as HTMLButtonElement
-
-	showEnglishOnlyButton.addEventListener("click", ()=>{
-		const checkicon = showEnglishOnlyButton.querySelector('.i-myna-square')
-		const checkedicon = showEnglishOnlyButton.querySelector('.i-myna-check-square')
-
-		if (checkicon && checkedicon) {
-			checkicon.classList.toggle('hidden')
-			checkedicon.classList.toggle('hidden')
-		}
-
-		const posts = document.querySelectorAll('.lang-id')
-		posts.forEach(post => {
-			post.classList.toggle('hidden')
-		})	
-	})
-</script>

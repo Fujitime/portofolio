@@ -1,48 +1,68 @@
 ---
-import ToggleTheme from "./ToggleTheme.astro";
+import ToggleTheme from "../components/ToggleTheme.astro";
+import { t, type Lang } from "../lang/translate";
 
 const links = [
-	{
-		href: "/blog",
-		label: "Blog",
-		icon: "i-myna-book",
-	},
-	
+  {
+    href: "/blog",
+    label: "Blog",
+    icon: "i-myna-book",
+  },
 ];
 
 const iconLinks = [
-	{
-		href: "https://github.com/xirf",
-		icon: "i-myna-brand-github",
-		label: "GitHub",
-	},
-
+  {
+    href: "https://github.com/xirf",
+    icon: "i-myna-brand-github",
+    label: "GitHub",
+  },
 ];
+
+const languages: Lang[] = ["en", "id", "jp"];
+const currentLang = Astro.cookies.get("lang")?.value as Lang || "id"; // Default ke "id"
+
+console.log("Current Lang (Header.astro):", currentLang);
+console.log("Cookie Lang (Header.astro):", Astro.cookies.get("lang")?.value);
 ---
 
 <nav class="px-8 py-6 w-full flex items-center justify-between fixed bottom-0 left-0 md:relative bg-l-base dark:bg-d-base z-100">
-	<a href="/" title="Home" aria-label="Home">
-		<div class="flex justify-between gap-2 font-bold">
-			<span class="i-myna-terminal w-10 h-10"></span>
-			<span class="hidden sm:block">Fuji</span>
-		</div>
-	</a>
-	<div class="flex items-center gap-4">
-		{
-			links.map((link) => (
-				<a href={link.href} class=" flex items-center" title={link.label} aria-label={link.label}>
-					<span class={link.icon + " w-10 h-10 sm:hidden"} />
-					<span class=" hidden sm:block" >{link.label}</span>
-				</a>
-			))
-		}
-		{
-			iconLinks.map((link) => (
-				<a href={link.href} class=" flex items-center" rel="noopener" target="_blank" aria-label={link.label} title={link.label}>
-					<span class={link.icon + " w-10 h-10"} />
-				</a>
-			))
-		}
-		<ToggleTheme />
-	</div>
+  <a href="/" title="Home" aria-label="Home">
+    <div class="flex justify-between gap-2 font-bold">
+      <span class="i-myna-terminal w-10 h-10"></span>
+    </div>
+  </a>
+  <div class="flex items-center gap-4">
+    {links.map((link) => (
+      <a href={link.href} class="flex items-center" title={link.label} aria-label={link.label}>
+        <span class={link.icon + " w-10 h-10 sm:hidden"} />
+        <span class="hidden sm:block">{t(currentLang, "blog")}</span> {/* Gunakan terjemahan */}
+      </a>
+    ))}
+
+    {iconLinks.map((link) => (
+      <a href={link.href} class="flex items-center" rel="noopener" target="_blank" aria-label={link.label} title={link.label}>
+        <span class={link.icon + " w-10 h-10"} />
+      </a>
+    ))}
+
+    {/* Language Switcher */}
+    <div class="flex gap-2">
+      {languages.map((lang) => (
+        <a
+          href={`?lang=${lang}`}
+          class={`text-sm px-2 py-1 rounded ${
+            currentLang === lang 
+              ? "bg-blue-500 text-white" 
+              : "hover:bg-gray-100 dark:hover:bg-gray-800"
+          }`}
+        >
+          {lang.toUpperCase()}
+        </a>
+      ))}
+    </div>
+
+    <ToggleTheme />
+  </div>
 </nav>
+
+<slot />
