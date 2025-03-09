@@ -1,73 +1,71 @@
 ---
+// Importing the necessary components
 import Layout from "../layouts/Layout.astro";
 import CookieBanner from "../components/Cookie.astro";
-import { t, type Lang } from "../lang/translate";
 
-// Ambil parameter `lang` dari URL
-let currentLang: Lang = "jp"; // Nilai default
-
-if (Astro.url.searchParams.has("lang")) {
-  const newLang = Astro.url.searchParams.get("lang") as Lang;
-  
-  // Atur cookie `lang` dengan nilai baru
-  Astro.cookies.set("lang", newLang, {
-    path: "/",
-    maxAge: 60 * 60 * 24 * 365, // 1 tahun
-  });
-
-  // Redirect ke halaman yang sama tanpa parameter `lang`
-  return Astro.redirect(Astro.url.pathname);
+// Defining the interface for the social media data
+interface SocialMedia {
+  link: string;
+  icon: string;
+  name: string;
 }
 
-// Jika tidak ada parameter `lang`, ambil nilai dari cookie
-currentLang = Astro.cookies.get("lang")?.value as Lang || "jp";
-
-console.log("Current Lang (index.astro):", currentLang);
-console.log("Cookie Lang (index.astro):", Astro.cookies.get("lang")?.value);
-
-const socialMedia = [
+// Data for social media links
+const socialMedia: SocialMedia[] = [
   {
     link: "https://github.com/fujitime",
     icon: "i-myna-brand-github",
-    name: t(currentLang, "socialMedia.github"),
+    name: "GitHub",
   },
   {
     link: "https://www.facebook.com/kang.komen.798",
     icon: "i-myna-brand-facebook",
-    name: t(currentLang, "socialMedia.facebook"),
+    name: "Facebook",
   },
 ];
----
 
+---
 <Layout
-  title={t(currentLang, "title")}
-  description={t(currentLang, "description")}
+  title="Fuji Halim rabani"
+  description="Halo! Saya Fuji Halim rabani, seorang penjelajah internet yang menghabiskan banyak waktu di depan layar. Saya menikmati bermain Anki dan Duolingo, membaca manga, menonton anime, serta sesekali menulis dan berolahraga."
 >
   <div class="flex items-center justify-center min-h-70vh p-12">
-    <div class="w-full grid gap-3 max-w-xl slide-enter-content">
-      <h1 class="dark:text-#e5e7eb text-4xl font-bold item">
-        Fuji <span class="text-sm font-normal opacity-75 ml-1">or <span class="bold underline">Waltahh</span></span>
+    <div class="w-full grid gap-4 max-w-xl slide-enter-content">
+      <h1 class="dark:text-#e5e7eb text-4xl font-bold">
+        Fuji <span class="text-sm font-normal opacity-75 ml-1">atau <span class="bold underline">Waltahh</span></span>
       </h1>
+
       <div>
-        <p>{t(currentLang, "description")}</p>
+        <p>Halo! 👋 Saya Fuji Halim rabani, seorang penjelajah internet.</p>
+        <p>Ya, itu gelar yang saya berikan untuk diri sendiri karena, jujur saja, saya menghabiskan banyak waktu di depan layar.</p>
       </div>
-      <div class="w-20 h-1px bg-gray opacity-50 mx-auto mt-2"></div>
-      <div class="text-sm">
-        <p>Find me on</p>
-        <div class="flex items-start justify-start gap-4 mt-2">
-          {
-            socialMedia.map((url) => (
-              <a
-                href={url.link}
-                class="btn-normal flex items-center justify-center gap-2 transition-all duration-300 ease-in-out hover:(opacity-100 bg-#8882) opacity-90"
-                target="_blank"
-                rel="external nofollow noopener noreferrer"
-              >
-                <span class:list={[url.icon, "inline-block", "w-4", "h-4"]} />
-                {url.name}
-              </a>
-            ))
-          }
+
+      <div class="mt-4">
+        <p>Kegiatan sehari-hari saya, Bermain Anki dan Duolingo. Terdengar produktif? Mungkin.</p>
+        <p>Di sela-sela kesibukan yang sebenarnya tidak terlalu sibuk, saya suka membaca manga, menonton anime, dan scroll Facebook—aktivitas yang cukup manusiawi di zaman sekarang.</p>
+      </div>
+
+      <div class="mt-4">
+        <p>Oh ya, meskipun tidak sering, saya juga suka menulis dan berolahraga.</p>
+        <p>Menulis adalah cara saya menuangkan pikiran-pikiran random yang berlarian di kepala, sementara olahraga... yah, setidaknya saya mencoba. Dan itu yang penting, kan?</p>
+      </div>
+
+      <div class="w-20 h-1px bg-gray opacity-50 mx-auto mt-4"></div>
+
+      <div class="text-sm mt-4">
+        <p>Temukan saya di:</p>
+        <div class="flex items-center justify-start gap-4 mt-2">
+          {socialMedia.map((url) => (
+            <a
+              href={url.link}
+              class="btn-normal flex items-center justify-center gap-2 transition-all duration-300 ease-in-out hover:opacity-100 hover:bg-gray-600 opacity-90"
+              target="_blank"
+              rel="external nofollow noopener noreferrer"
+            >
+              <span class={["inline-block", "w-4", "h-4", url.icon].join(" ")} />
+              {url.name}
+            </a>
+          ))}
         </div>
       </div>
     </div>

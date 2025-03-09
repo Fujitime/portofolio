@@ -6,50 +6,8 @@ backend:
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
-collections:
-  - name: "blog"
-    label: "Blog Posts"
-    folder: "src/content/blog"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Description", name: "description", widget: "text" }
-      - { label: "Publication Date", name: "pubDate", widget: "datetime" }
-      - { label: "Updated Date", name: "updatedDate", widget: "datetime" }
-      - { label: "Hero Image", name: "heroImage", widget: "image" }
-      - { label: "Content", name: "body", widget: "markdown" }
-      - { label: "Tags", name: "tags", widget: "list", field: { label: "Tag", name: "tag", widget: "string" } }
-      - { label: "Categories", name: "categories", widget: "list", field: { label: "Category", name: "category", widget: "string" } }
-      - { label: "Author", name: "author", widget: "string" }
-      - { label: "Reading Time", name: "readingTime", widget: "string" }
-
-    sortable_fields:
-      - "pubDate"
-      - "updatedDate"
-
-# The base URL of your site
 site_url: https://waltahh.netlify.app/
 
-# SEO anchor for SEO metadata configuration
-seo: &seo
-  name: "SEOmetaData"
-  label: "SEO"
-  widget: "object"
-  collapsed: true
-  fields:
-    - { name: "metaTitle", label: "SEO Title", widget: "string", default: "{{ title }}", required: true }
-    - { name: "metaDescription", label: "SEO Description", widget: "string", pattern: [".{20,160}", "between 20 and 160 characters"], required: true, hint: "must be between 20 and 160 characters" }
-    - { name: "metaImage", label: "SEO image", widget: "image" }
-    - { name: "keywords", label: "keywords", widget: "string", hint: "keywords are comma separated", required: false }
-    - { name: "metaAuthor", label: "Meta Author", widget: "string", required: false, hint: "Author name for SEO purposes" }
-    - { name: "metaRobots", label: "Robots Meta Tag", widget: "string", hint: "SEO robots directive (e.g., index, noindex)" }
-
-# Media folder configuration
-media_folder: "public/images/uploads"
-public_folder: "/images/uploads"
-
-# Collections configuration
 collections:
   - name: "blog"
     label: "Blog Posts"
@@ -68,26 +26,21 @@ collections:
       - { label: "Author", name: "author", widget: "string" }
       - { label: "Reading Time", name: "readingTime", widget: "string" }
       - { label: "SEO Metadata", name: "seo", widget: "object", fields: *seo }
-
     sortable_fields:
       - "pubDate"
       - "updatedDate"
 
-# Widgets and other settings
-widgets:
-  - name: "tag-list"
-    label: "Tag List"
-    widget: "list"
-    field:
-      label: "Tag"
-      name: "tag"
-      widget: "string"
-  - name: "markdown-preview"
-    label: "Markdown Preview"
-    widget: "markdown"
+# SEO anchor for SEO metadata configuration
+seo: &seo
+  name: "SEOmetaData"
+  label: "SEO"
+  widget: "object"
+  collapsed: true
+  fields:
+    - { name: "metaTitle", label: "SEO Title", widget: "string", default: "{{ title }}", required: true }
+    - { name: "metaDescription", label: "SEO Description", widget: "string", pattern: [".{20,160}", "between 20 and 160 characters"], required: true, hint: "must be between 20 and 160 characters" }
+    - { name: "metaImage", label: "SEO image", widget: "image" }
+    - { name: "keywords", label: "keywords", widget: "string", hint: "keywords are comma separated", required: false }
+    - { name: "metaAuthor", label: "Meta Author", widget: "string", required: false, hint: "Author name for SEO purposes" }
+    - { name: "metaRobots", label: "Robots Meta Tag", widget: "string", hint: "SEO robots directive (e.g., index, noindex)" }
 
-# Global settings for the website
-settings:
-  theme: "light"
-  contact_email: "racun1601@gmail.com"
-  footer_text: "© 2025 Waltahh, All rights reserved."

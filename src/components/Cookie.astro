@@ -1,18 +1,16 @@
 ---
-import { t, type Lang } from "../lang/translate";
-
-const currentLang = Astro.cookies.get("lang")?.value as Lang || "id";
+import ToggleTheme from "../components/ToggleTheme.astro";
 ---
 
 <template id="cookie-template">
   <div
     class="fixed opacity-0 translate-x-10% bottom-0 right-0 m-4 bg-l-base text-l-on-base rounded-lg shadow-xl dark:(bg-d-base text-d-on-base border-1 border-white border-opacity-10) flex flex-row items-center gap-4 p-4 z-9999 transition-all duration-500 ease-in-out"
     id="cookie-dialog">
-    <div class="i-myna-cookie w10 h10"></div>
+    <div class="i-myna-cookie w-10 h-10"></div>
     <div class="max-w-xs text-xs flex flex-col items-end">
-      <p data-lang-key="cookieMessage">{t(currentLang, "cookieMessage")}</p>
-      <button class="px-2 py1 bg-gray bg-opacity-25 backdrop-blur-lg rounded-md w-fit mt-2" data-lang-key="cookieButton">
-        {t(currentLang, "cookieButton")}
+      <p>Ini bukan toko roti, tapi ini 'cookie' untukmu! 🍪 Situs ini menggunakan cookie. Selamat menikmati!</p>
+      <button class="px-2 py-1 bg-gray bg-opacity-25 backdrop-blur-lg rounded-md w-fit mt-2">
+        Oke 🍪
       </button>
     </div>
   </div>
@@ -22,9 +20,9 @@ const currentLang = Astro.cookies.get("lang")?.value as Lang || "id";
   document.addEventListener("DOMContentLoaded", () => {
     const isAcceptCookie = localStorage.getItem("acceptCookie") === "true";
     if (!isAcceptCookie) {
-      const template = document.getElementById("cookie-template") as HTMLTemplateElement | null;
+      const template = document.getElementById("cookie-template") as HTMLTemplateElement | null; // Type assertion here
       if (template) {
-        const clone = document.importNode(template.content, true);
+        const clone = document.importNode(template.content, true); // Now template.content should be valid
         document.body.appendChild(clone);
 
         const cookieDialog = document.getElementById("cookie-dialog");
