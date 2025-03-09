@@ -1,12 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Netlify CMS</title>
-    <script src="https://cdn.jsdelivr.net/npm/netlify-cms-app@2.10.1/dist/netlify-cms.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Decap CMS Admin Panel</title>
+    <!-- Tambahkan script Netlify Identity Widget -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/decap-cms-app@2.10.1/dist/decap-cms.js"></script>
   </head>
   <body>
-    <h1>Admin Panel</h1>
+    <h1>Decap CMS Admin Panel</h1>
+
     <script>
+      // Inisialisasi Netlify Identity
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.init();
+      }
+      
+      // Inisialisasi Decap CMS
       CMS.init();
     </script>
   </body>
