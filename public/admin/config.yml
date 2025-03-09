@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 backend:
   name: git-gateway
   branch: main
@@ -28,3 +29,80 @@ collections:
     sortable_fields:
       - "pubDate"
       - "updatedDate"
+=======
+# local_backend: true
+
+# Backend configuration, used for handling the content's Git management
+backend:
+  name: git-gateway  # Using Git Gateway for authentication and handling of content
+  branch: main  # Default Git branch
+
+# The base URL of your site
+site_url: https://waltahh.netlify.app/
+
+# SEO anchor for SEO metadata configuration
+seo: &seo
+  name: "SEOmetaData"
+  label: "SEO"
+  widget: "object"
+  collapsed: true  # Whether the section should be collapsed in the CMS UI
+  fields:
+    - { name: "metaTitle", label: "SEO Title", widget: "string", default: "{{ title }}", required: true }
+    - { name: "metaDescription", label: "SEO Description", widget: "string", pattern: [".{20,160}", "between 20 and 160 characters"], required: true, hint: "must be between 20 and 160 characters" }
+    - { name: "metaImage", label: "SEO image", widget: "image" }
+    - { name: "keywords", label: "keywords", widget: "string", hint: "keywords are comma separated", required: false }
+    - { name: "metaAuthor", label: "Meta Author", widget: "string", required: false, hint: "Author name for SEO purposes" }
+    - { name: "metaRobots", label: "Robots Meta Tag", widget: "string", hint: "SEO robots directive (e.g., index, noindex)" }
+
+# Media folder configuration
+media_folder: "public/images/uploads"  # Folder where uploaded media files will be stored
+public_folder: "/images/uploads"  # Public URL path to access media files
+
+# Collections configuration (defining the structure of the content)
+collections:
+  - name: "blog"  # The name of the collection (used in the UI and content management)
+    label: "Blog Posts"  # The label of the collection displayed in the CMS UI
+    folder: "src/content/blog"  # Path to the folder where blog posts are stored
+    create: true  # Allow the creation of new posts
+    slug: "{{slug}}"  # Use dynamic slugs based on the title of the post
+
+    # Fields configuration for the blog post
+    fields:
+      - { label: "Title", name: "title", widget: "string" }  # Blog post title
+      - { label: "Description", name: "description", widget: "text" }  # A brief description of the post
+      - { label: "Publication Date", name: "pubDate", widget: "datetime" }  # Date the post was published
+      - { label: "Updated Date", name: "updatedDate", widget: "datetime" }  # Date the post was last updated
+      - { label: "Hero Image", name: "heroImage", widget: "image" }  # Featured image for the post
+      - { label: "Content", name: "body", widget: "markdown" }  # The main content of the post (Markdown format)
+      - { label: "Tags", name: "tags", widget: "list", field: { label: "Tag", name: "tag", widget: "string" } }  # Tags for the post
+      - { label: "Categories", name: "categories", widget: "list", field: { label: "Category", name: "category", widget: "string" } }  # Categories for the post
+      - { label: "Author", name: "author", widget: "string" }  # Author of the post
+      - { label: "Reading Time", name: "readingTime", widget: "string" }  # Estimated reading time for the post
+      - { label: "SEO Metadata", name: "seo", widget: "object", fields: *seo }  # Link to the SEO fields defined earlier
+
+    sortable_fields:
+      - "pubDate"  # Allows sorting by publication date
+      - "updatedDate"  # Allows sorting by updated date
+
+
+# Additional customization for widgets and styling
+widgets:
+  - name: "tag-list"
+    label: "Tag List"
+    widget: "list"
+    field:
+      label: "Tag"
+      name: "tag"
+      widget: "string"
+  - name: "markdown-preview"
+    label: "Markdown Preview"
+    widget: "markdown"
+
+# Global settings for the website
+settings:
+  theme: "light"  # Theme setting (could be dynamic based on user preference)
+  contact_email: "racun1601@gmail.com"  # Email for contact
+  footer_text: "© 2025 Waltahh, All rights reserved."  # Footer text
+
+
+>>>>>>> 387aa09 (change)

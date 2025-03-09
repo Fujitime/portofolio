@@ -23,6 +23,10 @@
     "@typescript-eslint/parser": "^7.13.1",
     "astro": "^5.4.2",
     "astro-expressive-code": "^0.35.3",
+<<<<<<< HEAD
+=======
+    "decap-cms": "^3.6.2",
+>>>>>>> 387aa09 (change)
     "decap-cms-app": "^3.6.2",
     "eslint": "latest",
     "eslint-plugin-astro": "^1.2.2",
