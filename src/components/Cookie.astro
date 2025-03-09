@@ -1,10 +1,7 @@
 ---
 import { t, type Lang } from "../lang/translate";
 
-const currentLang = Astro.cookies.get("lang")?.value as Lang || "jp";
-
-console.log("Current Lang (Cookie.astro):", currentLang);
-console.log("Cookie Lang (Cookie.astro):", Astro.cookies.get("lang")?.value);
+const currentLang = Astro.cookies.get("lang")?.value as Lang || "id";
 ---
 
 <template id="cookie-template">
@@ -13,8 +10,8 @@ console.log("Cookie Lang (Cookie.astro):", Astro.cookies.get("lang")?.value);
     id="cookie-dialog">
     <div class="i-myna-cookie w10 h10"></div>
     <div class="max-w-xs text-xs flex flex-col items-end">
-      <p>{t(currentLang, "cookieMessage")}</p>
-      <button class="px-2 py1 bg-gray bg-opacity-25 backdrop-blur-lg rounded-md w-fit mt-2">
+      <p data-lang-key="cookieMessage">{t(currentLang, "cookieMessage")}</p>
+      <button class="px-2 py1 bg-gray bg-opacity-25 backdrop-blur-lg rounded-md w-fit mt-2" data-lang-key="cookieButton">
         {t(currentLang, "cookieButton")}
       </button>
     </div>
@@ -22,35 +19,31 @@ console.log("Cookie Lang (Cookie.astro):", Astro.cookies.get("lang")?.value);
 </template>
 
 <script>
- document.addEventListener("DOMContentLoaded", () => {
-  const isAcceptCookie = localStorage.getItem("acceptCookie") === "true";
-  if (!isAcceptCookie) {
-    // Gunakan type assertion ke HTMLTemplateElement
-    const template = document.getElementById("cookie-template") as HTMLTemplateElement | null;
-    
-    if (template) {
-      // Clone konten template
-      const clone = document.importNode(template.content, true);
-      document.body.appendChild(clone);
+  document.addEventListener("DOMContentLoaded", () => {
+    const isAcceptCookie = localStorage.getItem("acceptCookie") === "true";
+    if (!isAcceptCookie) {
+      const template = document.getElementById("cookie-template") as HTMLTemplateElement | null;
+      if (template) {
+        const clone = document.importNode(template.content, true);
+        document.body.appendChild(clone);
 
-      const cookieDialog = document.getElementById("cookie-dialog");
-      const acceptCookie = cookieDialog?.querySelector("button");
+        const cookieDialog = document.getElementById("cookie-dialog");
+        const acceptCookie = cookieDialog?.querySelector("button");
 
-      setTimeout(() => {
-        cookieDialog?.classList.add("slide-x");
+        setTimeout(() => {
+          cookieDialog?.classList.add("slide-x");
 
-        acceptCookie?.addEventListener("click", () => {
-          console.log("clicker");
-          cookieDialog?.classList.remove("slide-x");
-          setTimeout(() => {
-            cookieDialog?.remove();
-            localStorage.setItem("acceptCookie", "true");
-          }, 510);
-        });
-      }, 2000);
+          acceptCookie?.addEventListener("click", () => {
+            cookieDialog?.classList.remove("slide-x");
+            setTimeout(() => {
+              cookieDialog?.remove();
+              localStorage.setItem("acceptCookie", "true");
+            }, 510);
+          });
+        }, 2000);
+      }
     }
-  }
-});
+  });
 </script>
 
 <style>

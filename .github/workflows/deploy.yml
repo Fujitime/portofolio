@@ -1,4 +1,4 @@
-name: Deploy to CyberPanel via FTP
+name: Deploy to Netlify
 
 on:
   push:
@@ -22,22 +22,14 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Modify Astro Config for Static Output
-      run: |
-        sed -i 's/output: "hybrid"/output: "static"/' astro.config.mjs
-        sed -i 's/adapter: vercel()//' astro.config.mjs
-        sed -i 's#import vercel from "@astrojs/vercel/serverless";##' astro.config.mjs
-        sed -i 's#site: "https://andka.my.id",#site: "https://andka.jamcoder.id",#' astro.config.mjs
-
     - name: Build project
-      run: npm run build 
+      run: npm run build
 
-    - name: Upload via FTP
-      uses: SamKirkland/FTP-Deploy-Action@4.3.0
-      with:
-        server: andka.jamcoder.id
-        username: admin_andka
-        password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./dist/
-        server-dir: ./public_html/
+    - name: Install Netlify CLI
+      run: npm install -g netlify-cli
 
+    - name: Deploy to Netlify
+      run: netlify deploy --prod --dir=dist
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

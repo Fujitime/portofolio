@@ -54,18 +54,16 @@ export const translations: Record<Lang, TranslationContent> = {
 };
 
 export function t(lang: Lang, key: string): string {
-  const keys = key.split('.');
-  let result: unknown = translations[lang];
-
+  const keys = key.split(".");
+  let translation = translations[lang];
+  
   for (const k of keys) {
-    if (typeof result === "object" && result !== null && k in result) {
-      result = (result as Record<string, unknown>)[k];
+    if (translation[k]) {
+      translation = translation[k];
     } else {
-      return typeof translations["en"][key as keyof TranslationContent] === "string"
-        ? (translations["en"][key as keyof TranslationContent] as string)
-        : key;
+      return key; // Kembali ke key jika tidak ditemukan
     }
   }
-
-  return typeof result === "string" ? result : key;
+  
+  return translation as any;
 }
