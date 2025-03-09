@@ -1,7 +1,6 @@
 backend:
   name: git-gateway
   branch: main
-  auth_scope: repo
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
@@ -30,17 +29,4 @@ collections:
       - "pubDate"
       - "updatedDate"
 
-# SEO anchor for SEO metadata configuration
-seo: &seo
-  name: "SEOmetaData"
-  label: "SEO"
-  widget: "object"
-  collapsed: true
-  fields:
-    - { name: "metaTitle", label: "SEO Title", widget: "string", default: "{{ title }}", required: true }
-    - { name: "metaDescription", label: "SEO Description", widget: "string", pattern: [".{20,160}", "between 20 and 160 characters"], required: true, hint: "must be between 20 and 160 characters" }
-    - { name: "metaImage", label: "SEO image", widget: "image" }
-    - { name: "keywords", label: "keywords", widget: "string", hint: "keywords are comma separated", required: false }
-    - { name: "metaAuthor", label: "Meta Author", widget: "string", required: false, hint: "Author name for SEO purposes" }
-    - { name: "metaRobots", label: "Robots Meta Tag", widget: "string", hint: "SEO robots directive (e.g., index, noindex)" }
 
