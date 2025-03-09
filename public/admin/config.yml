@@ -1,6 +1,7 @@
 backend:
   name: git-gateway
   branch: main
+  auth_scope: repo
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
@@ -10,7 +11,6 @@ site_url: https://waltahh.netlify.app/
 collections:
   - name: "blog"
     label: "Blog Posts"
-    folder: "src/content/blog"
     create: true
     slug: "{{slug}}"
     fields:
@@ -20,13 +20,3 @@ collections:
       - { label: "Updated Date", name: "updatedDate", widget: "datetime" }
       - { label: "Hero Image", name: "heroImage", widget: "image" }
       - { label: "Content", name: "body", widget: "markdown" }
-      - { label: "Tags", name: "tags", widget: "list", field: { label: "Tag", name: "tag", widget: "string" } }
-      - { label: "Categories", name: "categories", widget: "list", field: { label: "Category", name: "category", widget: "string" } }
-      - { label: "Author", name: "author", widget: "string" }
-      - { label: "Reading Time", name: "readingTime", widget: "string" }
-      - { label: "SEO Metadata", name: "seo", widget: "object", fields: *seo }
-    sortable_fields:
-      - "pubDate"
-      - "updatedDate"
-
-
